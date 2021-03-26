@@ -1,0 +1,60 @@
+<div class="mt-5 mb-5">
+<div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card rounded-0">
+        <div class="card-header">
+          <h5 class="mb-0" [style.color]="this.ProductService.color">
+            {{'Login' | translate }}
+          </h5>
+        </div>
+        <div class="card-body">
+          <form class="form" novalidate [formGroup]="buildForm" (ngSubmit)="userLogin()">
+            <div class="example-container">
+              <mat-form-field appearance="fill">
+                <mat-label [style.color]="this.ProductService.color">{{'UserName' | translate}} *</mat-label>
+                <input matInput formControlName="username">
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill">
+                <mat-label [style.color]="this.ProductService.color">{{'password' | translate}} *</mat-label>
+                <input matInput formControlName="password" [type]="showPass ? 'password' : 'text'">
+                <button mat-icon-button matSuffix type="button" (click)="showPass = !showPass" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{showPass ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+          
+            </div>
+            <div class="row justify-content-end">
+              <button type="submit" [disabled]="!buildForm.valid"
+              [style.background]="this.ProductService.color"
+                      class="btn pull-right float-right">
+                {{'Login' | translate}}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- alert dialog -->
+<ng-template #dialog>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+      {{'invalid credentials' | translate}}
+    </h4>
+    <button type="button" class="close pull-right" (click)="hide()" aria-label="close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <div class="alert alert-danger" role="alert">
+     {{' Either username or password are incorrect !!' | translate}}
+    </div>
+    <button type="button" class="btn btn-danger" (click)="buildForm.reset();hide()">
+      {{'Try Again' | translate}}
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,60 @@
+<div class="container" *ngIf="category">
+    <div>
+        <h2 class="text-center mt-4 mb-4" style="font-family: 'Anton',sans-serif;">
+            {{categoryName | translate}}
+        </h2>
+        <mat-divider class="mb-5"></mat-divider>
+        <div class="row">
+            <div class="col-md-4 mb-5" *ngFor="let product of category">
+                <div class="card mb-3 w-100 h-100">
+                    <img [src]="product.image" class="w-100 h-100" *ngIf="product.image">
+                    <div class="card-body">
+                        <h5 class="card-text lead">{{product.title | translate}}</h5>
+                        <mat-divider></mat-divider>
+                        <p class="card-text lead">${{product.price}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 col-6">
+                                <button class="btn" [style.borderColor]="this.productService.color" (click)="viewProductDetails(product)">
+                                    {{'View details' | translate}} 
+                                </button>
+                              </div>
+                                <!-- *ngIf="authService.isLoggedIn()" -->
+                                <div class="col-md-6 col-6">
+                                <button class="btn" [style.borderColor]="this.productService.color"
+                                (click)="openDialog(addToCartDialog)">
+                                    {{'Add to Cart' | translate}}
+                                </button>
+                              </div>
+                            <ng-template #addToCartDialog>
+
+
+                                <h4>{{'Type here how many quantity you want to add into your cart' | translate}}</h4>
+                                <mat-dialog-content class="mat-typography" style="width: 400px;height: auto;">
+                                    <div class="row justify-content-center mt-2">
+                                        <mat-form-field class="mt-3" appearance="fill">
+                                            <mat-label>{{'Quantity' | translate}}</mat-label>
+                                            <input type="number" matInput name="quantity" [(ngModel)]="quantity" min="1"
+                                                max="100" placeholder="Ex. 10" required>
+                                        </mat-form-field>
+                                    </div>
+                                </mat-dialog-content>
+                                <mat-dialog-actions align="end">
+                                    <button type="button" class="btn pull-right" style="width: 48%"
+                                    [style.borderColor]="this.productService.color"
+                                        (click)="pushToCart(product.id,quantity);openSnackBar('cart was added successfully','ok')">
+                                        {{'Add to Cart' | translate}}
+                                    </button>
+                                    <button type="button" style="width: 120px;" (click)="hideDialog()"
+                                        class="btn pull-right" [style.borderColor]="this.productService.color">{{'close' | translate}}</button>
+                                </mat-dialog-actions>
+                            </ng-template>
+                            <!-- <app-add-to-cart [inputProduct]="product"></app-add-to-cart> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

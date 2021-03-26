@@ -1,0 +1,19 @@
+*{overflow-x: hidden !important;}
+.figure-img{height: 400px !important;}
+.btn{border: 2px solid cadetblue;float: left;width: 100%;transition: all .5s ease-in;}
+// .btn:hover{background: #FF847C;color: white;}
+@media (max-width: 767px ){/* mobile & tablet*/
+    h4,mat-form-field{margin: 0 8% !important}
+    // .btn {
+    //     width: 39%;
+    // }
+}
+@media (min-width: 768px) and (max-width:991px){ /* small screen */
+  
+  
+  
+}
+@media (min-width: 992px) and (max-width:1199px) { /* medium screen */
+  
+  
+}

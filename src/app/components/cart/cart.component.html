@@ -1,0 +1,191 @@
+<div class="main-cart text-light row justify-content-between m-2 p-3" 
+[style.background]="this.ProductService.color">
+<div class="col-md-4">
+  <h3>{{'your main cart' | translate}}</h3>
+</div>
+<div class="col-md-4">
+  <button class="btn" [style.borderColor]="this.ProductService.color" color="warn" (click)="openModal(removeAllProducts)">
+    {{'Clear Cart' | translate}}</button>
+</div>
+<div class="col-md-4">
+  <h3>{{'Total Price' | translate}} $ {{ProductService.totalPrice}}</h3>
+</div>
+</div>
+
+<div class="container-fluid text-center justify-content-between">
+  <!-- cartItem.total_products === 0 -->
+<div class="bg-info" *ngIf="">
+<h3 style="font-family: Anton;">
+there are no products inside your cart !!
+</h3>
+<p class="lead text-warning">
+Go to products page to add the products that you want.
+<a style="font-size: 22px;" mat-button routerLink="/product">
+Navigate to products
+</a>
+</p>
+</div>
+</div>
+
+<ng-template #removeAllProducts>
+<div class="modal-header">
+<h4 class="modal-title pull-left">
+  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+   {{'Attention' | translate}}
+</h4>
+<button type="button" class="close pull-right" 
+[style.background]="this.ProductService.color"
+ aria-label="close" 
+(click)="hideModal()">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body text-center">
+<p class="text-danger lead">Are You Sure That You Want to clear Your Cart</p>
+<button type="button" [style.borderColor]="this.ProductService.color"
+ class="btn" (click)="ProductService.clearCart();hideModal()">yes</button>
+<button type="button" [style.borderColor]="this.ProductService.color" class="btn ml-2" (click)="hideModal()">no</button>
+</div>
+</ng-template>
+
+
+
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">{{'Product Name' | translate}}</th>
+        <th scope="col">{{'Price' | translate}}</th>
+        <th scope="col">{{'Quantity' | translate}}</th>
+        <th scope="col">{{'Actions' | translate}}</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ProductService.items;let i = index">
+        <td>
+          {{item.title | translate}}
+    </td>
+    <td>{{item.price}}</td>
+        <td>{{ProductService.quantities[i]}}</td>
+        <td>
+          <button class="btn mt-5" [style.borderColor]="this.ProductService.color"
+          (click)="openDialog(orderTemplate)">{{'Order' | translate}}</button>
+          <button class="btn ml-1 mt-5" [style.borderColor]="this.ProductService.color"
+           (click)="openModal(deleteItem)">{{'remove' | translate}}</button>
+          <ng-template #orderTemplate class="mt-3 mb-3" style="width:700px; height: auto;">
+            <h2 mat-dialog-title>{{'CheckOut Instruction'  | translate}}</h2>
+            <mat-dialog-content class="mat-typography" style="width:700px; height: auto;">
+            <h2>{{'Select Payment Methode'  | translate}}</h2>
+            <form novalidate [formGroup]="checkoutDto">
+            <div formGroupName="createPaymentDto">
+            <div class="form-group">
+              <label class="labelForm">
+                {{'Select Payment Methode' | translate}}
+              </label>
+              <br>
+              <mat-select [(ngModel)]="selectedPaymentMethod" name="payment_method"
+               formControlName="payment_method" class="border border-dark" required>
+                <mat-option>{{'select' | translate}}</mat-option>
+                <mat-option *ngFor="let payment of authService.paymentMethods" [value]="payment">{{payment}}</mat-option>
+              </mat-select>
+              <!-- paymentMethod.hasError('required') -->
+              <mat-error class="mat-error" *ngIf="">
+             {{'please choose a payment method'  | translate}}       
+                   </mat-error>
+            </div>
+            </div>
+            <div formGroupName="createOrderDto" *ngIf="checkSelectedMethod()">
+             <div class="form-group">
+               <label class="comments-label" for="comments">{{'Type your comments'  | translate}}</label>
+               <textarea formControlName="comments" [(ngModel)]="comment" name="comments" id="comments" required>
+               </textarea>
+               <!-- comments.hasError('required') -->
+               <mat-error class="mat-error" *ngIf="">
+                 {{'please fill your comments'  | translate}}
+               </mat-error>
+             
+              </div>
+            </div>
+            <button type="button" 
+            (click)="pushToOrders(item.id,comment);hideDialog()" 
+            class="btn checkout-btn" [style.borderColor]="this.ProductService.color"
+            >{{'CheckOut' | translate}}</button>
+            </form>
+            </mat-dialog-content>
+              </ng-template>
+          <ng-template #deleteItem>
+            <div class="modal-header">
+            <h4 class="modal-title pull-left">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+               {{'Attention' | translate}}
+            </h4>
+            <button type="button" class="close pull-right" aria-label="close" 
+            (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body text-center">
+            <p class="text-danger lead">{{'Are You Sure That You Want To Remove This Product' | translate}}</p>
+            <button type="button" (click)="ProductService.removeFromCart(ProductService.items[i]);hideModal()"
+            [style.borderColor]="this.ProductService.color"
+            class="btn">{{'yes' | translate}}</button>
+            <button type="button" (click)="hideModal()" class="btn ml-2"
+            [style.borderColor]="this.ProductService.color"
+            >{{'No' | translate}}</button>
+            </div>
+            </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+    <!-- <table mat-table class="mat-elevation-z8">
+  
+     
+      <ng-container matColumnDef="Number">
+        <th mat-header-cell> Number</th>
+        <td mat-cell *ngFor="let product of cartData.cart;let i = index">{{i + 1}} </td>
+      </ng-container>
+  
+     
+      <ng-container matColumnDef="Name">
+        <th> Name </th>
+        <td *ngFor="let product of cartData.cart;let i = index"> {{product.name}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Price">
+        <th> Price </th>
+        <td >{{product.price}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="quantity">
+        <th> quantity </th>
+        <td> {{product.quantity}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th> actions </th>
+        <td>
+        <div class="row">
+          <div class="col-md-6">
+            <button mat-raised-order>place order</button>
+
+          </div>
+          <div class="col-md-6">
+            <button mat-raised-order>remove</button>
+
+          </div>
+        </div>
+       </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[1, 2, 3]" showFirstLastButtons></mat-paginator> -->
+ 
+  

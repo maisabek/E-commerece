@@ -1,0 +1,210 @@
+<div class="card ">
+  <div class="card-header">
+    <div class="card-head d-flex justify-content-between m-auto">
+      <h2 class="card-title m-auto tit">{{'Profile Information' | translate}}</h2>
+      <div class="card">
+        <div class="card-header" *ngIf="profile && profile.image">
+          <img [src]="profile.image" class="img-thumbnail" height="120" width="200" alt=""/>
+        </div>
+        <div class="card-footer justify-content-center">
+          <!-- && profile.image -->
+          <p *ngIf="profile" class="lead text-center">{{'Changing Profile Picture' | translate}}</p>
+          <!-- && profile.image -->
+          <div *ngIf="profile" class="input-group ">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" [style.background]="this.ProductService.color"
+                     ng2FileSelect [uploader]="uploader" (change)="onFileSelect($event)" id="changedImage" name="image"
+                     required>
+              <label class="custom-file-label" for="changedImage">{{'You have chosen' | translate}}: {{selectedFile}}</label>
+            </div>
+            <div class="input-group-append">
+              <button type="button" class=" input-group-text btn"
+              [style.background]="this.ProductService.color"
+              (click)="changingExistPicture()">{{'Change' | translate}}
+              </button>
+            </div>
+          </div>
+          <!-- && !profile.image -->
+          <p *ngIf="profile" class="lead text-center">{{'Uploading Profile Picture' | translate}}</p>
+          <!-- && !profile.image -->
+          <div *ngIf="profile" class="input-group ">
+            <div class="custom-file">
+              <input ng2FileSelect [uploader]="uploader" (change)="onFileSelect($event)" type="file"
+                     class="custom-file-input" [style.background]="this.ProductService.color" id="newImage"
+                     name="image"
+                     required>
+              <label class="custom-file-label" for="newImage">{{'You have chosen' | translate}}: {{selectedFile}} </label>
+            </div>
+            <div class="input-group-append">
+              <button type="button" class="input-group-text btn"
+              [style.background]="this.ProductService.color"
+                      (click)="uploadingNewPicture()">{{'Upload' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="cardbody">
+    <div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'UserName' | translate}}: {{profile.username}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(firstName)">{{'Edit' | translate}}</button>
+</div>
+<hr>
+<div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'Email' | translate}}: {{profile.email}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(email)" >{{'Edit' | translate}}</button>
+</div>
+<hr>
+<div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'Phone' | translate}}: {{profile.phone}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(phone)">{{'Edit' | translate}}</button>
+</div>
+<hr>
+<div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'City' | translate}}: {{profile.address.city}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(city)" >{{'Edit' | translate}}</button>
+</div>
+<hr>
+<div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'Street' | translate }}: {{profile.address.street}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(street)" >{{'Edit' | translate}}</button>
+</div>
+<hr>
+<div class="d-flex justify-content-between m-auto p-2">
+    <p>{{'zipcode' | translate}}: {{profile.address.zipcode}}</p>
+    <button class="btn" [style.background]="this.ProductService.color" type="button" (click)="openModal(zipcode)" >{{'Edit' | translate}}</button>
+</div>
+</div>
+
+<ng-template #firstName>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+         {{' Updating Your Firstname' | translate}}</h4>
+        <button type="button" class="close pull-right"
+         aria-label="Close" (click)="modalRef.hide()"
+         [style.background]="this.ProductService.color"
+         >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="firstname" class="label">{{'userName' | translate}}: {{profile.username}}</label>
+          <input class="form-control" id="firstname" [(ngModel)]="updateObject.firstname" name="firstname" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn  float-right" 
+        [style.background]="this.ProductService.color"
+        (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+    
+      </div>
+</ng-template>
+
+<ng-template #email>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+         {{'Updating Your Email' | translate}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="email" class="label">{{'Email' | translate}}: {{profile.email}}</label>
+          <input class="form-control" id="email" [(ngModel)]="updateObject.email" name="email" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn float-right" [style.background]="this.ProductService.color"
+        (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+    
+      </div>
+</ng-template>
+
+<ng-template #phone>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+         {{'Updating Your Phone' | translate}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="phone" class="label">{{'Phone' | translate}}: {{profile.phone}}</label>
+          <input class="form-control" id="phone" [(ngModel)]="updateObject.phone" name="phone" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn  float-right" 
+        [style.background]="this.ProductService.color"
+         (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+    
+      </div>
+</ng-template>
+
+<ng-template #city>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{'Updating Your city' | translate}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="phone" class="label">{{'City' | translate}}: {{profile.address.city}}</label>
+          <input class="form-control" id="city" [(ngModel)]="updateObject.city" name="city" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn float-right"
+        [style.background]="this.ProductService.color"
+         (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+      </div>
+</ng-template>
+
+<ng-template #street>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{'Updating Your Street' | translate}}</h4>
+        <button type="button" class="close pull-right"
+        [style.background]="this.ProductService.color"
+         aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="street" class="label">{{'Street' | translate}}: {{profile.address.street}}</label>
+          <input class="form-control" id="street" [(ngModel)]="updateObject.street" name="street" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn float-right"
+        [style.background]="this.ProductService.color"
+         (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+    
+      </div>
+</ng-template>
+
+<ng-template #zipcode>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{'Updating Your zipcode' | translate}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="form-group">
+          <label for="zipcode" class="label">{{'zipcode' | translate}}: {{profile.address.zipcode}}</label>
+          <input class="form-control" id="zipcode" [(ngModel)]="updateObject.zipcode" name="zipcode" type="text"
+                 required>
+        </div>
+        <button type="button" class="btn  float-right"
+        [style.background]="this.ProductService.color"
+         (click)="updateProfile(); hide()">{{'Save Changes' | translate}}</button>
+    
+      </div>
+</ng-template>

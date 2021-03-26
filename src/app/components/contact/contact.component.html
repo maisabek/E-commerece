@@ -1,0 +1,62 @@
+<div class="container card mt-5">
+    <form [formGroup]="CreateContactDto" novalidate>
+     <h5 class="mb-5" style="font-family: 'Anton',sans-serif;" [style.color]="this.ProductService.color">
+        {{'Fill Your Message Information' | translate}}
+     </h5>
+     <div class="row">
+         <div class="col-md-6">
+             <div class="formGroup">
+                 <input type="text" formControlName="name" class="form-control"
+                 placeholder="{{'UserName' | translate}} *" required>
+             </div>
+             <div class="form-group mt-3">
+                <input type="email" formControlName="email" name="email" class="form-control"
+                       placeholder="{{'Email' | translate}} *" required>
+              </div>
+              <div class="form-group">
+                <input type="text" formControlName="phone" name="phone" class="form-control"
+                       placeholder="{{'Phone' | translate}} *" required>
+              </div>
+         </div>
+
+         <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" formControlName="title" name="title" class="form-control"
+                     placeholder="{{'Subject' | translate}} *" required>
+            </div>
+            <div class="form-group">
+              <textarea type="text" style="width: 100%; height: 150px;" formControlName="message" name="message"
+                        class="form-control"
+                        placeholder="{{'Message' | translate}} *" required>
+              </textarea>
+            </div>
+          </div>
+    
+        </div>
+        <div class="row mt-3 justify-content-center">
+          <div class="col-md-12 justify-content-center">
+            <button type="submit" class="btn"
+            [style.background]="this.ProductService.color"
+             (click)="openDialog(newMessageTemplate)" [disabled]="!CreateContactDto.valid">
+              {{'Send' | translate}}
+            </button>
+          </div>
+     </div>
+    </form>
+    <ng-template #newMessageTemplate>
+        <h2 mat-dialog-title>{{'Do You Want To Send Another Message?' | translate}}</h2>
+       
+
+        <mat-dialog-actions align="end">
+          <button type="button" class="btn"
+           (click)="CreateContactDto.reset(); hideDialog();" [style.background]="this.ProductService.color">
+            {{'Yes' | translate}}
+          </button>
+          <button class="btn btn-warning ml-1 pull-right"
+           mat-dialog-close (click)="hideDialog()" [style.background]="this.ProductService.color">
+            {{'Cancel' | translate}}
+          </button>
+        </mat-dialog-actions>
+      </ng-template>
+</div>
+

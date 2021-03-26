@@ -1,0 +1,29 @@
+@import '../../shared/scss/variables.scss';
+*{overflow: hidden !important;}
+img{height: 370px !important;}
+h3{margin:0 43%;color: gray;}
+.btn{border: 2px solid cadetblue;transition: all .5s ease-in;}
+::placeholder{margin:0 10% !important}
+h5,p{color: gray;}
+// .btn:hover{background: $mainColor;color: white;}
+@media (max-width: 767px ){/* mobile & tablet*/
+    h4,mat-form-field{
+        margin: 0 8% !important;
+      }
+      h3{
+        margin: 0 7%;
+      }
+    //   .btn {
+    //     width: 39%;
+    // }
+    //   .btn{margin-top: 5px;}
+}
+@media (min-width: 768px) and (max-width:991px){ /* small screen */
+  
+  
+  
+}
+@media (min-width: 992px) and (max-width:1199px) { /* medium screen */
+  
+  
+}

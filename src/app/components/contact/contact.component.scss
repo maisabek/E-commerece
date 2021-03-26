@@ -1,0 +1,20 @@
+*{overflow: hidden !important;}
+h5{color:cadetblue}
+.btn{background-color:cadetblue;
+    color:white;cursor: pointer;width: 49%;transition:all .5s ease;}
+    // .btn:hover{border:1px solid #fd6358 ;color: #fd6358;background: white;}
+    form{    margin: 32px;
+    }
+
+    @media (max-width: 767px ){/* mobile & tablet*/
+
+    }
+    @media (min-width: 768px) and (max-width:991px){ /* small screen */
+      
+      
+      
+    }
+    @media (min-width: 992px) and (max-width:1199px) { /* medium screen */
+      
+      
+    }

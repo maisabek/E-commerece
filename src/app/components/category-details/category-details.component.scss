@@ -1,0 +1,21 @@
+img{height: 370px !important;}
+.btn{border: 2px solid cadetblue;color:gray;transition: all .5s ease-in;}
+
+// .btn:hover{background: #FF847C;color: white;}
+h2{color: gray;}
+
+@media (max-width: 767px ){/* mobile & tablet*/
+    h4,mat-form-field{
+        margin: 0 8% !important;
+      }
+   
+}
+@media (min-width: 768px) and (max-width:991px){ /* small screen */
+  
+  
+  
+}
+@media (min-width: 992px) and (max-width:1199px) { /* medium screen */
+  
+  
+}

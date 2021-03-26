@@ -1,0 +1,120 @@
+<div class="navbar1" [style.background]="this.ProductService.color">
+  <div class="container">
+    <div class="row">
+    <div class="col-md-4 col-5">
+      <ul>
+        <li>
+          <a>
+            <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </a>
+        </li>
+        <li class="GTSwebsite-li"><a routerLink="/product" routerLinkActive="active">{{'GTS Website' | translate}}</a></li>
+        <li class="contact-li"><a routerLink="/contact" routerLinkActive="active">{{'Contact Us' | translate}}</a></li>
+        <li class="hidde-li">
+          <a [matMenuTriggerFor]="contactMenu">
+            <button mat-icon-button>
+              <mat-icon>menu</mat-icon>
+            </button>
+          </a>
+        </li>
+        <div class="clearfix"></div>                
+        <mat-menu #contactMenu="matMenu">
+         <a mat-menu-item routerLink="/product" routerLinkActive="active">{{'GTS Website' | translate}}</a>
+         <a mat-menu-item routerLink="/contact" routerLinkActive="active">{{'Contact Us' | translate}}</a>
+       </mat-menu>
+      </ul>
+    </div>
+
+    <div class="col-md-8 col-7">
+      <ul class="second-ul">
+        <li class="login-li"><a *ngIf="!authService.isLoggedIn()" routerLink="/auth/login" routerLinkActive="active">{{'Login' | translate}}</a></li>
+        <li class="register-li"><a *ngIf="!authService.isLoggedIn()" routerLink="/auth/register" routerLinkActive="active">{{'Register' | translate}}</a></li>
+        <li class="mangement-li">
+          <!-- *ngIf="authService.isLoggedIn() && (authService.currentUser && authService.currentUser.isAdmin)" -->
+          <a *ngIf="authService.username"
+            [matMenuTriggerFor]="managementMenu">{{'Mangement' | translate}}</a>
+          <mat-menu #managementMenu="matMenu">
+            <a mat-menu-item routerLink="/dashboard">{{'Information' | translate}}</a>
+          </mat-menu>
+        </li>
+        <!-- *ngIf="authService.isLoggedIn() && authService.currentUser" -->
+        <li class="username-li"><a *ngIf="authService.username" [matMenuTriggerFor]="userMenu">
+            {{authService.username}}</a>
+        </li>
+     
+        <mat-menu #userMenu="matMenu">
+          <a mat-menu-item routerLink="/profile">{{'Profile' | translate}}</a>
+          <a mat-menu-item routerLink="/order">{{'Orders' | translate}}</a>
+          <a mat-menu-item *ngIf="authService.username"
+          (click)="authService.userLogout()">{{'Logout' | translate}}</a>
+        </mat-menu>
+        <li class="auth-li">
+          <a [matMenuTriggerFor]="authMenu">
+            <button mat-icon-button>
+              <mat-icon>menu</mat-icon>
+            </button>
+          </a>
+        </li>
+        <li class="En-li">
+          <a (click)="changeCurrentLang('en')" class="btn">En |</a>  
+          <a  (click)="changeCurrentLang('ar')" class="btn ar">Ar</a>
+        </li>
+        <li>
+          <!-- *ngIf="authService.isLoggedIn() && authService.cartItem" -->
+          <a mat-button routerLink="/cart" routerLinkActive="active"
+            style="font-family: 'Anton', sans-serif; font-size: 23px"
+            >
+            <!-- [matBadge]="authService.cartItem.total_products.toString()" -->
+            <i class="fa fa-cart-plus" aria-hidden="true"
+             [matBadge]="ProductService.items.length" matBadgeOverlap="false"
+            matBadgePosition="above after" matBadgeSize="medium" matBadgeColor="warn"></i>
+           </a>
+        </li>
+     
+      <mat-menu #authMenu="matMenu">
+      <a mat-menu-item *ngIf="!authService.isLoggedIn()" routerLink="/auth/login" routerLinkActive="active">
+          {{'Login' | translate}}</a>
+        <a mat-menu-item *ngIf="!authService.isLoggedIn()" routerLink="/auth/register" routerLinkActive="active">
+          {{'Register' | translate}}</a>
+          <a mat-menu-item *ngIf="authService.username" [matMenuTriggerFor]="userMenu">
+            {{authService.username}}</a>
+            <a mat-menu-item *ngIf="authService.username"
+            [matMenuTriggerFor]="managementMenu">{{'Mangement' | translate}}</a>
+      </mat-menu>
+
+        <div class="clearFix"></div>
+      </ul>
+    </div>
+    <div class="clearFix"></div>
+  
+  </div></div>
+</div> <!-- end navbar -->
+
+<ng-container>
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" closed class="example-sidenav justify-content-center text-center"
+    [style.background]="this.ProductService.color"
+                 [fixedInViewport]="false">
+      <app-category-list [inputCategories]="categories"></app-category-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <div class="changeMainColor">
+        <div class="color1" (click)="changecolor('green')" id="green"> </div>
+        <div class="color2 ml-1 mr-1" (click)="changecolor('midnightblue')" id="midnightblue"></div>
+        <div class="color5" (click)="changecolor('cadetblue')" id="cadetblue"></div>
+        <div class="color3 ml-1 mr-1" (click)="changecolor('indigo')" id="indigo"></div>
+        <div class="color4" (click)="changecolor('#FF847C')" id="#FF847C"></div>
+      
+        </div>
+    </mat-sidenav-content>
+    
+  </mat-sidenav-container>
+ 
+  <app-footer></app-footer>
+ 
+</ng-container>
+

@@ -1,0 +1,67 @@
+<div class="container">
+<div class="row">
+    <div class="col-md-6 mb-5 mt-4" *ngIf="product && product.image">
+     <img [src]="product.image" class="figure-img w-100">
+    </div>
+    <div class="col-md-6  mt-5" *ngIf="product">
+        <p class="lead">
+            <!-- Name: {{product.title}} -->
+        </p>
+        <p class="lead">
+            {{'Description' | translate}}: {{product.description | translate}}
+        </p>
+        <p class="lead">
+            {{'Price' | translate}}: {{product.price}}
+        </p>
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <button class="btn" [style.borderColor]="this.productService.color" (click)="authService.username;openDialog(addToCartDialog)">
+                {{'Add to Cart' | translate}}        </button>  
+            </div>
+            <div class="col-md-6 col-12">
+              <button class="btn" [style.borderColor]="this.productService.color"
+              routerLink="/product">{{'Back' | translate}}</button>      
+            </div>
+          </div>
+  
+  
+    
+
+        <!-- <div class="row justify-content-center border border-danger rounded p-2" *ngIf="!authService.username">
+            <div class="col-md-6">
+              <p class="text-warning">
+                you should be logged in to add this product into your cart
+              </p>
+            </div>
+            <div class="col-md-6">
+              <button class="btn" [style.background]="this.productService.color"
+               routerLink="/auth/login">
+                    Login
+              </button>
+          </div>
+        </div> -->
+        <ng-template #addToCartDialog>
+            <h4>{{'Type here how many quantity you want to add into your cart' | translate}}</h4>
+            <mat-dialog-content class="mat-typography" style="width: 400px;height: auto;">
+             <div class="row justify-content-center mt-2">
+               <mat-form-field class="mt-3" appearance="fill">
+                  <mat-label>{{'Quantity' | translate}}</mat-label>
+                  <input type="number" matInput name="quantity" [(ngModel)]="quantity" min="1" max="100" placeholder="Ex. 10" required>
+                </mat-form-field>
+             </div>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+              <button type="button" class="btn pull-right"
+              [style.borderColor]="this.productService.color" style="width: 48%"
+               (click)="pushToCart(product.id,quantity);quantity=0;openSnackBar('cart was added successfully','ok')">
+                  {{'Add to Cart' | translate}}
+              </button>
+              <button type="button" style="width: 120px;" (click)="hideDialog()" [style.borderColor]="this.productService.color"
+               class="btn pull-right">{{'close' | translate}}</button>
+            </mat-dialog-actions>
+          </ng-template>
+          <!-- <app-add-to-cart [inputProduct]="product"></app-add-to-cart> -->
+        </div>
+ 
+</div>
+</div>

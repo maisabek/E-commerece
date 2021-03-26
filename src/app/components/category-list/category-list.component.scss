@@ -1,0 +1,28 @@
+*{overflow-x:hidden}
+
+mat-list-item{color:white !important}
+.itemCss {
+    font-family: 'Alfa Slab One', cursive;
+    background: gray;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, rgb(211, 207, 207), rgb(180, 180, 180));  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, rgb(214, 212, 212), rgb(180, 178, 178)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    cursor: pointer;
+    margin: 2% 0;
+  }
+  .categories{
+      margin: 20% 0;
+      h2{margin:10% 0;}
+}
+
+@media (max-width: 767px ){/* mobile & tablet*/
+
+}
+@media (min-width: 768px) and (max-width:991px){ /* small screen */
+  
+  
+  
+}
+@media (min-width: 992px) and (max-width:1199px) { /* medium screen */
+  
+  
+}

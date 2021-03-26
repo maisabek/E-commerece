@@ -1,0 +1,23 @@
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+           <th>{{'Number' | translate}}</th>
+           <th>{{'Product Name' | translate}}</th>
+           <th>{{'Status' | translate}}</th>
+           <th>{{'comments' | translate}}</th>
+           <th>{{'Shipment Date' | translate}}</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of orderService.orders ; let i=index">
+                <td>{{ i + 1 }}</td>
+                <td>{{item.title}}</td>
+                <td>PROCESSED</td>
+                <td>{{ProductService.comments[i]}}</td>
+                <td>{{date | date:'short'}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
